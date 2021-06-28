@@ -1,12 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import Night from "./components/Night";
 
-const HelloWorld = () => {
-    return (
-        <h1>
-            Hello World
-        </h1>
-    );
+export default function App() {
+  return (
+    <Router>
+        <Switch>
+          <Route path="/night" component={Night} />
+        </Switch>
+    </Router>
+  );
 }
 
-ReactDOM.render(<HelloWorld />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));
