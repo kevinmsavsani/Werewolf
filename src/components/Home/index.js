@@ -3,7 +3,7 @@ import "./style.css";
 
 function Home() {
     return (
-            <div class="home">
+            <div className="home">
                 <h1>Werewolf</h1>
                 <hr />
                 <h2>Gameplay</h2>
@@ -18,8 +18,8 @@ function Home() {
                 </p>
                 <p>The Werewolf Team wins when all Werewolves avoid death
                 </p>
-                <a class="btn btn-primary" href="new">New Game</a>
-                <a class="btn btn-primary" href="join">Join Game</a>
+                <a className="btn btn-primary" href="new">New Game</a>
+                <a className="btn btn-primary" href="join">Join Game</a>
         </div>
     );
 }

@@ -16,8 +16,7 @@ import "./style.css";
 export default function App() {
   return (
     <Provider store={store}>
-      <Component />
-      <div class="body">
+      <div className="body">
         <Router>
             <Switch>
             <Route path="/new" component={NewGame} />

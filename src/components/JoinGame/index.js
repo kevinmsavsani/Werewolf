@@ -3,7 +3,7 @@ import "./style.css";
 
 function JoinGame() {
     return (
-        <div class="join">
+        <div className="join">
             <h1>Join a game</h1>
             <div id="content">
                 <p>Ask your host for the 4-letter game code.</p>
