@@ -7,11 +7,12 @@ import {
 } from "react-router-dom";
 import Home from "./components/Home";
 import JoinGame from './components/JoinGame';
-import NewGame from './components/NewGame';
+import RoomStart from './components/RoomStart';
 import { Provider } from 'react-redux';
 import { store } from './store/configure-store';
 import Component  from './store/component';
 import "./style.css";
+import NewGame from './components/NewGame';
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
       <div className="body">
         <Router>
             <Switch>
+            <Route path="/rooms/:id" component={RoomStart} />
             <Route path="/new" component={NewGame} />
             <Route path="/join" component={JoinGame} />
               <Route path="/" component={Home} />
