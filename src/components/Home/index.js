@@ -3,7 +3,6 @@ import "./style.css";
 
 function Home() {
     return (
-        <div class="body">
             <div class="home">
                 <h1>Werewolf</h1>
                 <hr />
@@ -21,7 +20,6 @@ function Home() {
                 </p>
                 <a class="btn btn-primary" href="new">New Game</a>
                 <a class="btn btn-primary" href="join">Join Game</a>
-        </div>
         </div>
     );
 }
