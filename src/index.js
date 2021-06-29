@@ -5,13 +5,17 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import Night from "./components/Night";
+import Home from "./components/Home";
+import JoinGame from './components/JoinGame';
+import NewGame from './components/NewGame';
 
 export default function App() {
   return (
     <Router>
         <Switch>
-          <Route path="/night" component={Night} />
+        <Route path="/new" component={NewGame} />
+        <Route path="/join" component={JoinGame} />
+          <Route path="/" component={Home} />
         </Switch>
     </Router>
   );
