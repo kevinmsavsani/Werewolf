@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "webpack": "webpack",
-    "start": "webpack serve",
+    "client": "webpack serve",
+    "dev": "npm run start:client & npm run start:server",
+    "start:server": "nodemon src/server.js",
+    "start:client": "parcel src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -39,10 +42,18 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
+    "@popperjs/core": "^2.9.2",
+    "bootstrap": "^5.0.2",
+    "moment": "^2.29.1",
+    "nodemon": "^2.0.9",
+    "parcel": "^2.0.0-beta.2",
+    "parcel-bundler": "^1.12.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
-    "redux": "^4.1.0"
+    "redux": "^4.1.0",
+    "socket.io": "^4.1.2",
+    "socket.io-client": "^4.1.2"
   }
 }
