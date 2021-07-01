@@ -40,17 +40,12 @@ function NewGame(props) {
         return users.filter(user => user.id !== id);
       });
     });
-    // window.location.href = url; 
+    window.location.href = url; 
   }, []);
 
   return (
     <div>
       <h1>New Game</h1>
-      <ul id="users">
-            {users.map(({ name, id, roomId }) => (
-              <li key={id}>{name} {roomId}</li>
-            ))}
-          </ul>
     </div>
   );
 };
