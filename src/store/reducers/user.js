@@ -5,10 +5,7 @@ const initialState = {
 };
 
 function user(state = initialState, action) {
-  console.log(action)
   if (action.type === STORE_USER) {
-    console.log(state)
-    console.log(action.payload)
     return {user: action.payload};
   }
   return state;
