@@ -4,22 +4,16 @@ const io = require("socket.io")(server, {
 });
 const users = {};
 io.on("connection", client => {
-  client.on("username", username => {
+  client.on("username", ({username,roomId}) => {
     const user = {
       name: username,
-      id: client.id
+      id: client.id,
+      roomId: roomId
     };
     users[client.id] = user;
+    console.log(user)
     io.emit("connected", user);
     io.emit("users", Object.values(users));
-  });
-
-  client.on("send", message => {
-    io.emit("message", {
-      text: message,
-      date: new Date().toISOString(),
-      user: users[client.id]
-    });
   });
 
   client.on("disconnect", () => {
@@ -28,4 +22,4 @@ io.on("connection", client => {
     io.emit("disconnected", client.id);
   });
 });
-server.listen(3000);
+server.listen(8000);

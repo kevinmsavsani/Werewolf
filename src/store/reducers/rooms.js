@@ -1,8 +1,6 @@
 
 // initialization
-const initialState = {
-  rooms: []
-};
+const initialState = [];
 
 // action creators
 export function insertItem({ room, index }) {
@@ -28,23 +26,21 @@ function removeItemSplice(array, action) {
 }
 
 function insertItemImHelper(array, action) {
-    let newArray = array.slice()
-    newArray.splice(action.index, 0, action.item)
-    return newArray
+    return [...array,action.room]
   }
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {  
   case "REMOVE_ROOM_SPLICE":
-    return {
+    return [
       ...state,
-      rooms: removeItemSplice(state.rooms, action)
-    };
+      ...removeItemSplice(state, action)
+    ];
     case "INSERT_ITEM":
-      return {
+      return [
         ...state,
-        rooms: insertItemImHelper(state.rooms, action)
-      };
+        action.room
+  ];
   default:
      return state;
   }

@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import { Redirect } from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import io from "socket.io-client";
 
 function makeid(length) {
     var result           = '';
@@ -12,20 +12,47 @@ function makeid(length) {
    return result;
 }
 
+const socket = io("http://localhost:8000", {
+  transports: ["websocket", "polling"]
+});
 
-function NewGame() {
-    useEffect( () => {
-        const id = makeid(4)
-        console.log(id)
-        const url = `/rooms/${id}`
-        window.location.href = url;
-     }, []);
+function NewGame(props) {
+  const [users, setUsers] = useState([]);
 
-     return (
-        <div>
-          <h1>New Game</h1>
-        </div>
-      );
-}
+  useEffect(() => {
+    const roomId = makeid(4)
+    const url = `/rooms/${roomId}`
+    const username = prompt("what is your username");
+    socket.on("connect", () => {
+      socket.emit("username", {username,roomId});
+    });
 
-export default NewGame
+    socket.on("users", users => {
+      setUsers(users);
+    });
+
+    socket.on("connected", user => {
+      setUsers(users => [...users, user]);
+    });
+
+    socket.on("disconnected", id => {
+      setUsers(users => {
+        return users.filter(user => user.id !== id);
+      });
+    });
+    // window.location.href = url; 
+  }, []);
+
+  return (
+    <div>
+      <h1>New Game</h1>
+      <ul id="users">
+            {users.map(({ name, id, roomId }) => (
+              <li key={id}>{name} {roomId}</li>
+            ))}
+          </ul>
+    </div>
+  );
+};
+
+export default NewGame;
