@@ -11,14 +11,13 @@ io.on("connection", client => {
       roomId: roomId
     };
     users[client.id] = user;
-    io.emit("connected", user);
     io.emit("users", Object.values(users));
   });
 
   client.on("disconnect", () => {
     const username = users[client.id];
     delete users[client.id];
-    io.emit("disconnected", client.id);
+    io.emit("disconnected", {id:client.id, users});
   });
 });
 server.listen(8000);
