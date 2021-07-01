@@ -11,7 +11,6 @@ io.on("connection", client => {
       roomId: roomId
     };
     users[client.id] = user;
-    console.log(user)
     io.emit("connected", user);
     io.emit("users", Object.values(users));
   });

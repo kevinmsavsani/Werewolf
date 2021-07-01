@@ -2,7 +2,7 @@ import "./style.css";
 import React, {useEffect, useState} from 'react';
 import io from "socket.io-client";
 import { connect } from "react-redux";
-import { addRoom } from "../../store/actions/index";
+import { addRoom, storeUser } from "../../store/actions/index";
 
 const socket = io("http://localhost:8000", {
   transports: ["websocket", "polling"]
@@ -10,11 +10,11 @@ const socket = io("http://localhost:8000", {
 
 function RoomStart(props) {
   const [users, setUsers] = useState([]);
-
   useEffect(() => {
     const username = prompt("what is your username");
     socket.on("connect", () => {
       socket.emit("username", {username,roomId: props.match.params.id});
+      props.storeUser({user: username})
     });
 
     socket.on("users", users => {
@@ -30,7 +30,6 @@ function RoomStart(props) {
         return users.filter(user => user.id !== id);
       });
     });
-    console.log(props)
     props.addRoom({ roomId: props.match.params.id });
   }, []);
 
@@ -40,7 +39,6 @@ function RoomStart(props) {
   const adverbs = ['Angrily', 'Busily', 'Calmly', 'Dryly', 'Easily', 'Fearlessly', 'Grimly', 'Happily', 'Illegally', 'Jokingly', 'Keenly', 'Lazily', 'Madly', 'Noisily', 'Openly', 'Politely', 'Quietly', 'Readily', 'Swiftly', 'Terribly', 'Usefully', 'Vaguely', 'Weakly', 'Xenophobically', 'Yearly', 'Zealously'];
 
   function silly_sentence(string) {
-    console.log(props)
     var ordering;
     ordering = [adjectives, nouns, verbs, adverbs];
     return string.split('').map(function(letter, index) {
@@ -58,20 +56,22 @@ function RoomStart(props) {
                 <h3>Players</h3>
                 <ul>
                   {props.rooms.rooms.map(el => (
-                    <li key={el.id}>{el.roomId}</li>
+                    <li key={el.roomId}>{el.roomId}</li>
                   ))}
                 </ul>
+                  <h1>username: {props.user.user.user}</h1>
             </div>
         </div>
     );
 }
 const mapStateToProps = state => {
-  return { rooms: state.rooms };
+  return { rooms: state.rooms, user: state.user };
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    addRoom: room => dispatch(addRoom(room))
+    addRoom: room => dispatch(addRoom(room)),
+    storeUser: user => dispatch(storeUser(user))
   };
 }
 
