@@ -24,8 +24,7 @@ function RoomStart(props) {
       let newarray = Object.values(users).filter(function(value){ 
         return value.id  !== id;
     });
-      props.updateUsers({users: newarray
-    });
+      props.updateUsers({users: newarray});
   });
     props.addRoom({ roomId: props.match.params.id });
   }, []);
