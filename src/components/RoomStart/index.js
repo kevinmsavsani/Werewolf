@@ -51,7 +51,7 @@ function RoomStart(props) {
             <div id="content">
                 <h3>Players</h3>
                 <ul>
-                  {props.users.users.map(el => (
+                  {props.users.users.filter(user => user.roomId == props.match.params.id).map(el => (
                     <li key={el.id}>{el.name}</li>
                   ))}
                 </ul>
