@@ -12,12 +12,14 @@ const socket = io("http://localhost:8000", {
 function JoinGame(props) {
     const history = useHistory();
     const [room, setRoom] = useState("");
-    const [error,setError] = useState("");
-    const [boolError, setBoolError] = useState(true);
+
   useEffect(() => {
-    const username = prompt("what is your username");
     socket.on("connect", () => {
-      props.storeUser({user: username})
+      socket.emit("request", ({}))
+    });
+
+    socket.on("connectedUsers", users => {
+      props.updateUsers({users})
     });
 
     socket.on("users", users => {
@@ -30,22 +32,14 @@ function JoinGame(props) {
     });
       props.updateUsers({users: newarray});
   });
-    props.addRoom({ roomId: props.match.params.id });
   }, []);
 
 
       const handleChange =(event) =>  {
         setRoom(event.target.value.toUpperCase());
-        console.log(props.users)
-        const found = props.users.users.some(el => el.roomId === room);
-        if (found) setError("")
-        else {
-            setError(`Room ${room} does not exist`)
-        }
     }
 
     const showError =() =>  {
-        console.log(props.users)
         const found = props.users.users.some(el => el.roomId === room);
         if (found) {
             return ""
@@ -58,10 +52,9 @@ function JoinGame(props) {
     const roomCheck = (event) => {
         console.log("tapped")
         event.preventDefault();
-        socket.emit("username", {username: props.user.user.user,roomId: room});
-        props.addRoom({ roomId: room });
         const url = `/rooms/${room}`;
-        history.push(url);
+        // history.push(url);
+        window.location.href = url; 
     }
 
     return (

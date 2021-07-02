@@ -19,5 +19,9 @@ io.on("connection", client => {
     delete users[client.id];
     io.emit("disconnected", {id:client.id, users});
   });
+
+  client.on("request", () => {
+    io.emit("connectedUsers", Object.values(users));
+  });
 });
 server.listen(8000);
