@@ -13,6 +13,7 @@ function JoinGame(props) {
     const history = useHistory();
     const [room, setRoom] = useState("");
     const [error,setError] = useState("");
+    const [boolError, setBoolError] = useState(true);
   useEffect(() => {
     const username = prompt("what is your username");
     socket.on("connect", () => {
@@ -43,7 +44,16 @@ function JoinGame(props) {
         }
     }
 
-    const url = `rooms/${room}`
+    const showError =() =>  {
+        console.log(props.users)
+        const found = props.users.users.some(el => el.roomId === room);
+        if (found) {
+            return ""
+        }
+        else {
+            return `Room ${room} does not exist`
+        }
+    }
 
     const roomCheck = (event) => {
         console.log("tapped")
@@ -58,7 +68,7 @@ function JoinGame(props) {
         <div className="join">
             <h1>Join a game</h1>
             <div id="content">
-                <p className="join-error">{error}</p>
+                <p className="join-error">{showError()}</p>
                 <p>Ask your host for the 4-letter game code.</p>
             </div>
             <input type="text" value={room} onChange={handleChange} />
