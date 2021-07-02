@@ -38,4 +38,17 @@ a.btn {
   background-color: #28415b;
   border-color: #253c54;
 }
+
+input {
+  margin: 20px 0;
+  text-transform: uppercase;
+  font-size: 4em;
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: black;
+  border: 2px hidden transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
 /*# sourceMappingURL=style.css.map */

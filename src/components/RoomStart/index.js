@@ -56,7 +56,7 @@ function RoomStart(props) {
                     <li key={el.id}>{el.name}</li>
                   ))}
                 </ul>
-                  <h1>username: {props.user.user.user}</h1>
+                  {/* <h1>username: {props.user.user.user}</h1> */}
             </div>
         </div>
     );
