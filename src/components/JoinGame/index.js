@@ -12,7 +12,7 @@ const socket = io("http://localhost:8000", {
 function JoinGame(props) {
     const history = useHistory();
     const [room, setRoom] = useState("");
-
+    const [invalid,setInvalid] = useState(true);
   useEffect(() => {
     socket.on("connect", () => {
       socket.emit("request", ({}))
@@ -37,11 +37,19 @@ function JoinGame(props) {
 
       const handleChange =(event) =>  {
         setRoom(event.target.value.toUpperCase());
+        const found = props.users.users.some(el => el.roomId === room);
+        if(found) {
+          console.log(false)
+          setInvalid(false)
+        } else {
+          console.log(true)
+          setInvalid(true)
+        }
     }
 
     const showError =() =>  {
         const found = props.users.users.some(el => el.roomId === room);
-        if (found) {
+        if (found || room.length != 4) {
             return ""
         }
         else {
@@ -64,9 +72,9 @@ function JoinGame(props) {
                 <p className="join-error">{showError()}</p>
                 <p>Ask your host for the 4-letter game code.</p>
             </div>
-            <input type="text" value={room} onChange={handleChange} />
+            <input type="text" value={room} onChange={handleChange}  maxLength="4"/>
             <button className="btn-primary" onClick={() => {const url = `/`;history.push(url);}}>Back</button>
-            <button className="btn-primary" onClick={roomCheck}>Join</button> 
+            <button className="btn-primary" onClick={roomCheck} disabled={!props.users.users.some(el => el.roomId === room)}>Join</button> 
         </div>
     );
 }
