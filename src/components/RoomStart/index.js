@@ -3,12 +3,15 @@ import React, {useEffect, useState} from 'react';
 import io from "socket.io-client";
 import { connect } from "react-redux";
 import { addRoom, storeUser, updateUsers } from "../../store/actions/index";
+import {useHistory} from 'react-router-dom';
 
 const socket = io("http://localhost:8000", {
   transports: ["websocket", "polling"]
 });
 
 function RoomStart(props) {
+  const history = useHistory();
+
   useEffect(() => {
     const username = prompt("what is your username");
     socket.on("connect", () => {
@@ -42,6 +45,20 @@ function RoomStart(props) {
     }).join(' ');
   };
 
+
+  const roomCheck = (event) => {
+    event.preventDefault();
+    // const url = `/rooms/${room}`;
+    // history.push(url);
+    // window.location.href = url; 
+}
+
+function startGameCheck(){
+  const roomUsers = props.users.users.filter(user => user.roomId == props.match.params.id);
+  console.log(roomUsers)
+  return roomUsers.length > 3
+}
+    
     return (
         <div className="new">
             <h1>{props.match.params.id}</h1>
@@ -55,7 +72,8 @@ function RoomStart(props) {
                     <li key={el.id}>{el.name}</li>
                   ))}
                 </ul>
-                  {/* <h1>username: {props.user.user.user}</h1> */}
+                <button onClick={() => {const url = `/`;window.location.href = url;}}>Leave</button>
+                <button onClick={roomCheck} disabled={!startGameCheck()}>Start Game</button> 
             </div>
         </div>
     );
